@@ -32,16 +32,16 @@ end
 
 class Stark
 
-  attr_reader :name, :location,  :house_words, :protected_status
+  attr_reader :name, :location, :protected_status
   def initialize(name, location = "Winterfell")
     @name = name
     @location = location
     @protected_status = :unsafe
-    if name == "Arya"
-      @house_words = "The North Remembers"
-    else
-      @house_words = "Winter is Coming"
-    end
+  end
+
+  def house_words
+    return "The North Remembers" if name == "Arya"
+    "Winter is Coming"
   end
 
   def make_safe
