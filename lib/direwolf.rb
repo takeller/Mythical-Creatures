@@ -15,13 +15,11 @@ class Direwolf
   end
 
   def eligible_to_protect?(stark)
-    return true if home == stark.location && starks_to_protect.length < 2
-    false
+    home == stark.location && starks_to_protect.length < 2
   end
 
   def hunts_white_walkers?
-    return false if starks_to_protect.length != 0
-    true
+    starks_to_protect.length == 0
   end
 
   def leaves(stark)
@@ -55,7 +53,6 @@ class Stark
   end
 
   def safe?
-    return true if protected_status == :safe
-    false
+    protected_status == :safe
   end
 end
