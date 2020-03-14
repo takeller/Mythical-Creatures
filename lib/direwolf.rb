@@ -1,6 +1,6 @@
 class Direwolf
 
-  attr_reader :name, :home, :size, :starks_to_protect, :eligible_to_protect
+  attr_reader :name, :home, :size, :starks_to_protect
   def initialize(name, home = "Beyond the Wall", size = "Massive")
     @name = name
     @home = home
