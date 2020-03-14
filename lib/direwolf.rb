@@ -1,6 +1,6 @@
 class Direwolf
 
-  attr_reader :name, :home, :size, :starks_to_protect
+  attr_reader :name, :home, :size, :starks_to_protect, :eligible_to_protect
   def initialize(name, home = "Beyond the Wall", size = "Massive")
     @name = name
     @home = home
@@ -9,13 +9,13 @@ class Direwolf
   end
 
   def protects(stark)
-    return false unless self.eligible_to_protect?(stark)
+    return false unless eligible_to_protect?(stark)
     @starks_to_protect << stark
-    stark.protected_status = :safe
+    stark.make_safe
   end
 
   def eligible_to_protect?(stark)
-    return true if self.home == stark.location && starks_to_protect.length < 2
+    return true if home == stark.location && starks_to_protect.length < 2
     false
   end
 
@@ -26,7 +26,7 @@ class Direwolf
 
   def leaves(stark)
     return stark if starks_to_protect.include?(stark) == false
-    stark.protected_status = :unsafe
+    stark.make_unsafe
     starks_to_protect.delete(stark)
   end
 
@@ -34,8 +34,7 @@ end
 
 class Stark
 
-  attr_reader :name, :location,  :house_words
-  attr_accessor :protected_status
+  attr_reader :name, :location,  :house_words, :protected_status
   def initialize(name, location = "Winterfell")
     @name = name
     @location = location
@@ -45,6 +44,14 @@ class Stark
     else
       @house_words = "Winter is Coming"
     end
+  end
+
+  def make_safe
+    @protected_status = :safe
+  end
+
+  def make_unsafe
+    @protected_status = :unsafe
   end
 
   def safe?
