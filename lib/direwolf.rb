@@ -9,10 +9,14 @@ class Direwolf
   end
 
   def protects(stark)
-    if self.home == stark.location && starks_to_protect.length < 2
-      @starks_to_protect << stark
-      stark.protected_status = :safe
-    end
+    return false unless self.eligible_to_protect?(stark)
+    @starks_to_protect << stark
+    stark.protected_status = :safe
+  end
+
+  def eligible_to_protect?(stark)
+    return true if self.home == stark.location && starks_to_protect.length < 2
+    false
   end
 
   def hunts_white_walkers?
